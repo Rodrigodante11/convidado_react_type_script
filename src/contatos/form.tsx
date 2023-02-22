@@ -10,14 +10,20 @@ import { Contato , validationSchema } from './contato'
 import './index.css';
 
 interface ContatosFormProps {
-    contato?: Contato;
+    contato: Contato;
+    submeterFormulario: (contato: Contato) => void;
 }
 
-export const ContatosForm: React.FC<ContatosFormProps> = ({}: ContatosFormProps) =>{
+export const ContatosForm: React.FC<ContatosFormProps> = ({contato, submeterFormulario}: ContatosFormProps) =>{
+
+    const onSubmit = (contato: Contato, helper: FormikHelpers<Contato>) =>{
+        submeterFormulario(contato)
+        helper.resetForm();
+    }
 
     const formik = useFormik<Contato>({
-        onSubmit: (c: Contato) => console.log(c),
-        initialValues: { nome: '', idade: '' }, // valor inicial
+        onSubmit,
+        initialValues: {...contato }, // valor inicial
         validationSchema: validationSchema,
         validateOnChange: false
     })
