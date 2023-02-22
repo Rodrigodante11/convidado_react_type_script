@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'
 
 import { useFormik, FormikHelpers } from 'formik';
-import { Contato } from './contato'
+import { Contato , validationSchema } from './contato'
 
 import './index.css';
 
@@ -17,7 +17,9 @@ export const ContatosForm: React.FC<ContatosFormProps> = ({}: ContatosFormProps)
 
     const formik = useFormik<Contato>({
         onSubmit: (c: Contato) => console.log(c),
-        initialValues: { nome: '', idade: '' } // valor inicial
+        initialValues: { nome: '', idade: '' }, // valor inicial
+        validationSchema: validationSchema,
+        validateOnChange: false
     })
 
     return (
@@ -31,10 +33,13 @@ export const ContatosForm: React.FC<ContatosFormProps> = ({}: ContatosFormProps)
                                 name="nome"
                                 value={formik.values.nome}
                                 onChange={formik.handleChange}
-                                className="full-width">
+                                className="full-width" />
 
-                    </TextField>
+                    <span className='error-msg'>{ formik.errors.nome}</span>
                 </Grid>
+                <br/>
+                <br/>
+                <br/>
 
                 <Grid item xs={12}>
                     <TextField  variant='outlined' 
@@ -43,10 +48,9 @@ export const ContatosForm: React.FC<ContatosFormProps> = ({}: ContatosFormProps)
                                 id="inputIdade"
                                 value={formik.values.idade}
                                 onChange={formik.handleChange}
-                                className="full-width">
+                                className="full-width"/>
+                    <span>{ formik.errors.idade}</span>
 
-
-                    </TextField>
                 </Grid>
 
                 <Grid item xs={12}>
