@@ -1,5 +1,5 @@
 export interface Contato {
     id?:string;  // ? == opcional
     nome:string;
-    idade:string;
+    idade:number | '';
 }
